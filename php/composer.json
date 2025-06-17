@@ -1,0 +1,12 @@
+{
+    "name": "yaroslam/phpisabelle",
+    "description": "test programm for isabele",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Yaroslam\\Phpisabelle\\": "src/"
+        }
+    },
+    "require": {}
+}
