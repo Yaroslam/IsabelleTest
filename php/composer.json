@@ -1,12 +1,13 @@
 {
-    "name": "yaroslam/phpisabelle",
-    "description": "test programm for isabele",
+    "name": "coffee-shop/brewing-system",
+    "description": "Coffee brewing system with price calculation",
     "type": "project",
-    "license": "MIT",
+    "require": {
+        "php": ">=8.0"
+    },
     "autoload": {
         "psr-4": {
-            "Yaroslam\\Phpisabelle\\": "src/"
+            "Coffee\\": "src/"
         }
-    },
-    "require": {}
-}
+    }
+} 

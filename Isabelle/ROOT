@@ -1,0 +1,4 @@
+session "CoffeeSystem" = "HOL" +
+  options [timeout = 300]
+  theories
+    Coffee 
