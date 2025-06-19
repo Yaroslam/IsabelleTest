@@ -1,0 +1,13 @@
+{
+    "name": "discount-system/example",
+    "description": "A simple discount system with absolute and percentage coupons",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.4"
+    }
+} 
