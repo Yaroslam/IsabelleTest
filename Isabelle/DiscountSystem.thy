@@ -31,11 +31,11 @@ section \<open>Функция применения скидки\<close>
 
 text \<open>Применяем скидку к цене\<close>
 fun apply_discount :: "nat \<Rightarrow> coupon \<Rightarrow> nat" where
-  "apply_discount price c = 
-    (if ctype c = Absolute then
-      (if amount c \<le> price then price - amount c else 0)
-    else (* Percentage *)
-      price - (price * amount c) div 100)"
+  "apply_discount price (\<lparr>ctype = Absolute, amount = a\<rparr>) =
+     (if a \<le> price then price - a else 0)" |
+  "apply_discount price (\<lparr>ctype = Percent, amount = a\<rparr>) =
+     price - (price * a) div 100"
+
 
 section \<open>Основные теоремы\<close>
 
@@ -90,26 +90,27 @@ next
 qed
 
 text \<open>
-  ТЕОРЕМА О НЕСУЩЕСТВОВАНИИ: Не существует пары (цена, купон),
+  ТЕОРЕМА О НЕСУЩЕСТВОВАНИИ: Не существует пары (цена, абсолютный_купон),
   при которой применение купона увеличивает цену
 \<close>
-theorem no_price_increase:
+theorem no_absolute_price_increase:
   "\<not>(\<exists>price c. valid_price price \<and> valid_coupon c \<and> 
-              apply_discount price c > price)"
+              ctype c = Absolute \<and> apply_discount price c > price)"
 proof
   assume "\<exists>price c. valid_price price \<and> valid_coupon c \<and> 
-                   apply_discount price c > price"
+                   ctype c = Absolute \<and> apply_discount price c > price"
   then obtain price c where
     h1: "valid_price price" and
-    h2: "valid_coupon c" and  
-    h3: "apply_discount price c > price" by blast
+    h2: "valid_coupon c" and
+    h3: "ctype c = Absolute" and  
+    h4: "apply_discount price c > price" by blast
   
-  (* Но мы знаем, что скидка не может увеличить цену *)
+  (* Но мы знаем, что абсолютная скидка не может увеличить цену *)
   have "apply_discount price c \<le> price" 
-    using h1 h2 discount_never_increases by simp
+    using h1 h2 h3 absolute_discount_safe by simp
   
   (* Противоречие! *)
-  thus False using h3 by simp
+  thus False using h4 by simp
 qed
 
 section \<open>Примеры проверки\<close>
