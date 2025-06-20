@@ -31,11 +31,10 @@ section \<open>Функция применения скидки\<close>
 
 text \<open>Применяем скидку к цене\<close>
 fun apply_discount :: "nat \<Rightarrow> coupon \<Rightarrow> nat" where
-  "apply_discount price (\<lparr>ctype = Absolute, amount = a\<rparr>) =
-     (if a \<le> price then price - a else 0)" |
-  "apply_discount price (\<lparr>ctype = Percent, amount = a\<rparr>) =
-     price - (price * a) div 100"
-
+  "apply_discount price c = 
+    (case ctype c of
+      Absolute \<Rightarrow> (if amount c \<le> price then price - amount c else 0)
+    | Percentage \<Rightarrow> price - (price * amount c) div 100)"
 
 section \<open>Основные теоремы\<close>
 
@@ -52,6 +51,7 @@ proof -
         (if amount c \<le> price then price - amount c else 0)" 
     using assms(3) by simp
   thus ?thesis by auto
+
 qed
 
 text \<open>
