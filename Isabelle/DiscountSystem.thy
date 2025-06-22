@@ -25,7 +25,7 @@ definition valid_coupon :: "coupon \<Rightarrow> bool" where
 
 text \<open>Корректный инвойс: цена неотрицательна\<close>
 definition valid_price :: "nat \<Rightarrow> bool" where
-  "valid_price p \<equiv> True"  (* nat всегда неотрицателен *)
+  "valid_price p \<equiv> True"
 
 section \<open>Функция применения скидки\<close>
 
@@ -65,13 +65,7 @@ lemma percentage_discount_safe:
 proof -
   have "apply_discount price c = price - (price * amount c) div 100"
     using assms(3) by simp
-  
-  (* Показываем, что (price * amount c) div 100 \<le> price *)
-  have "amount c \<le> 100" using assms(2,3) valid_coupon_def by auto
-  hence "(price * amount c) div 100 \<le> price" 
-    by (auto simp: div_le_iff mult_le_mono)
-  
-  thus ?thesis by auto
+    thus ?thesis by auto
 qed
 
 text \<open>
@@ -103,7 +97,7 @@ proof
     h1: "valid_price price" and
     h2: "valid_coupon c" and
     h3: "ctype c = Absolute" and  
-    h4: "apply_discount price c > price" by blast
+    h4: "apply_discount price c > price" by auto
   
   (* Но мы знаем, что абсолютная скидка не может увеличить цену *)
   have "apply_discount price c \<le> price" 
