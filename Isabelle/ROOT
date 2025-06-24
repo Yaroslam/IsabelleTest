@@ -1,0 +1,7 @@
+session DiscountSystem = HOL +
+  description "Formal verification of discount system"
+  options [timeout = 300]
+  sessions
+    Main
+  theories
+    DiscountSystem 
